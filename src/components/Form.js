@@ -1,10 +1,12 @@
-import React,{useState} from 'react'
-import { CategoriaContext } from '../context/CategoriasContext'
+import React,{useState, useContext} from 'react'
+import { CategoriaContext } from '../context/CategoriasContext';
+import { RecetasContext } from '../context/RecetasContext';
 
 const Form = () => {
 
 	// use context
-	const {categorys} = React.useContext(CategoriaContext);
+	const {categorys} = useContext(CategoriaContext);
+	const {setSearch, setConsultar} = useContext(RecetasContext);
 
 	const [dataForm, setdataForm] = useState({
 		name: '',
@@ -20,11 +22,21 @@ const Form = () => {
 		})
 	}
 
+	// handle Submit
+
+	const handleSubmit = e => {
+
+		e.preventDefault();
+
+		setSearch(dataForm);
+		setConsultar(true);
+	}
+
 	return (
 		
 			<form 
 				className= " col-12"
-				onSubmit=""
+				onSubmit={handleSubmit}
 			>
 				<fieldset className="text-center">
 					<legend className="font-weight-bold">Busca Bebidas por Categorias o Ingredientes</legend>
