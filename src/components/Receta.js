@@ -17,12 +17,24 @@ function getModalStyle() {
 
 const useStyles = makeStyles(theme => ({
     paper: {
-      position: 'absolute',
-      width: 400,
-      backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
+		position: 'absolute',
+		width: 350,
+		backgroundColor: theme.palette.background.paper,
+		boxShadow: theme.shadows[5],
+		padding: theme.spacing(2, 4, 3),
+		overflow: 'scroll',
+		height: '100%',
+		maxHeight: 500,
+		display: 'block'
+		},
+		header: {
+		padding: '12px 0',
+		borderBottom: '1px solid darkgrey'
+		},
+		content: {
+		padding: "12px 0",
+		overflow: 'scroll'
+		}
 }));
 
 const Receta = ({receta}) => {
@@ -44,6 +56,23 @@ const Receta = ({receta}) => {
 
 	// extraer los valores del context
 	const { ingredientes, setIdReceta, setReceta } = useContext(ModalContext);
+
+	//Mostrar ingredientes y cantidades
+	const mostrarIngredientes = ingredientes => {
+		let informacion = [];
+		for(let i = 1; i < 16; i++){
+			if( ingredientes[`strIngredient${i}`]){
+				informacion.push(
+					<li>
+						
+						{ingredientes[`strIngredient${i}`]}:  {ingredientes[`strMeasure${i}`]}
+
+					</li>
+				)
+			}
+		}
+		return informacion;
+	}
 
 	return (
 		<div className="col-md-4 mb-3">
@@ -82,6 +111,10 @@ const Receta = ({receta}) => {
 								src= {ingredientes.strDrinkThumb}
 								alt= {ingredientes.strDrink}
 							/>
+							<h3>Ingredientes y Cantidades</h3>
+							<ul>
+								{ mostrarIngredientes(ingredientes) }
+							</ul>
 						</div>
 					</Modal>
 					
