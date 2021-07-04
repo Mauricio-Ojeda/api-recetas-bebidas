@@ -18,9 +18,16 @@ const RecetasProvider = (props) => {
 	useEffect(() => {
 
 		if(consultar){
+			let url ='';
 			const obtenerRecetas = async () => {
-				const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${name}&c=${category}`
-				const response = await axios.get(url);
+				
+				if(!category){
+					url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${name}`
+				} else {
+					url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${name}&c=${category}`
+				}	
+				
+				const response = await axios.get(url);				
 				setRecetas(response.data.drinks);
 				
 			}
@@ -31,7 +38,7 @@ const RecetasProvider = (props) => {
 
 		
 
-	}, [search, consultar, setConsultar, setRecetas])
+	}, [category, name, consultar, setConsultar, setRecetas])
 
 	return (
 
