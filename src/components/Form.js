@@ -1,12 +1,13 @@
 import React,{useState, useContext} from 'react'
 import { CategoriaContext } from '../context/CategoriasContext';
 import { RecetasContext } from '../context/RecetasContext';
+import Error from './Error';
 
 const Form = () => {
 
 	// use context
 	const {categorys} = useContext(CategoriaContext);
-	const {setSearch, setConsultar} = useContext(RecetasContext);
+	const {setSearch, setConsultar, ingredientesPermitidos} = useContext(RecetasContext);
 	const [error, setError] = useState(false)
 
 	const [dataForm, setdataForm] = useState({
@@ -30,8 +31,16 @@ const Form = () => {
 
 	const handleSubmit = e => {
 
-		e.preventDefault();
+		const listIngredientesPermitidos = async() => { 
+			if(ingredientesPermitidos){   
+				return ingredientesPermitidos.map( ingrediente => ingrediente.strIngredient1 );
+			}
+		}
+		listIngredientesPermitidos();
+		
 
+		e.preventDefault();
+		
 		// Validation form
 
 		if ( name.trim() === '' && category.trim() === '') {
@@ -43,6 +52,7 @@ const Form = () => {
 		// upDate Error state
 		setError(false);
 
+				
 		setSearch(dataForm);
 		setConsultar(true);
 	}
@@ -54,8 +64,8 @@ const Form = () => {
 				onSubmit={handleSubmit}
 			>
 				<fieldset className="text-center">
-					<legend className="font-weight-bold">Busca Bebidas por Categorias o Ingredientes</legend>
-					{ ( error ) ? <p className="error"> Debes Completar Alguno de los Campos</p> : null }
+					<legend className="font-weight-bold">Busca Bebidas por Categorias o Ingredientes en Ingles</legend>
+					{ ( error ) ? <Error mensaje= 'Debes Completar Alguno de los Campos'/>  : null }
 				</fieldset>
 
 				<div className="row mt-5">
