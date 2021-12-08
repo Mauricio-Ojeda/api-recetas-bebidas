@@ -8,7 +8,10 @@ const Form = () => {
 	// use context
 	const {categorys} = useContext(CategoriaContext);
 	const {setSearch, setConsultar, ingredientesPermitidos} = useContext(RecetasContext);
-	const [error, setError] = useState(false)
+	
+	// state
+	const [error, setError] = useState(false);
+	const [mensaje, setMensaje] = useState('');
 
 	const [dataForm, setdataForm] = useState({
 		name: '',
@@ -46,6 +49,14 @@ const Form = () => {
 		if ( name.trim() === '' && category.trim() === '') {
 			
 			setError(true);
+			setMensaje( 'Debes Completar Alguno de los Campos' );
+			return;			
+		}
+		
+		if ( ( name.lenght > 0 ) && ( category.length > 0 ) ) {
+			
+			setError(true);
+			setMensaje( 'Debes compoletar solo un campo' );
 			return;			
 		}
 
@@ -65,7 +76,7 @@ const Form = () => {
 			>
 				<fieldset className="text-center">
 					<legend className="font-weight-bold">Busca Bebidas por Categorias o Ingredientes en Ingles</legend>
-					{ ( error ) ? <Error mensaje= 'Debes Completar Alguno de los Campos'/>  : null }
+					{ ( error ) && <Error mensaje={ mensaje } /> }
 				</fieldset>
 
 				<div className="row mt-5">
