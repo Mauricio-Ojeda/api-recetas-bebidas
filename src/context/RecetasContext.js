@@ -33,12 +33,12 @@ const RecetasProvider = (props) => {
 				if(!category){
 					url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${name}`
 				} else {
-					url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${name}&c=${category}`
+					url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`
 				}	
 				
 				 await axios.get(url)				
-									.then(response => setRecetas(response.data.drinks))
-									
+							.then( response => setRecetas(response.data.drinks))
+							.catch( error => console.log(error) )		
 				
 			}
 			const listIngredientesPermitidos = async () => {

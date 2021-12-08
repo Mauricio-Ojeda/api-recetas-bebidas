@@ -53,7 +53,7 @@ const Form = () => {
 			return;			
 		}
 		
-		if ( ( name.lenght > 0 ) && ( category.length > 0 ) ) {
+		if ( ( name.length > 0 ) && ( category.length > 0 ) ) {
 			
 			setError(true);
 			setMensaje( 'Debes compoletar solo un campo' );
